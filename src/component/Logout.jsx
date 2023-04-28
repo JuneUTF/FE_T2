@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router'
 
 function Logout() {
     const navigate  = useNavigate ();
-    console.log(sessionStorage.removeItem("loginUsername"))
     useEffect(() => {
-        navigate("/login");
-        window.location.reload();   
+      sessionStorage.removeItem("loginUsername")
+      const txtmsg = "ログアウトできました"
+      navigate('/login', { state:  txtmsg  });
     }, [1])
-    
     
   return (
     <div>Logout OK</div>

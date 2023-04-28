@@ -11,6 +11,7 @@ import UserActive from './component/admin/UserActive';
 import Logout from './component/Logout';
 import Register from './component/Register';
 import User from './component/user/User';
+import Update from './component/user/Update';
 
 
 export const AuthContext = createContext();
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin/active" element={isRole ? <UserActive /> : <Navigate to="/mypage" />} />{/* 使えるユーザー名ページを設定 */}
         {/* ユーザー名の編集ページを設定 */}
         <Route path="/user/:username" element={isRole ? <User /> : <Navigate to="/mypage" />} />{/* 使えるユーザー名ページを設定 */}
+        <Route path="/edit/:username" element={isRole ? <Update /> : <Navigate to="/mypage" />} />{/* 使えるユーザー名ページを設定 */}
         </Routes>
     </BrowserRouter>
   )

@@ -21,7 +21,7 @@ function Mypage() {
 
     })
     
-    }, [1])
+    }, [])
     
     if(userData===undefined){
       return(

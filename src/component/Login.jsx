@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-function Login() {
+function Login(props) {
+  const location = useLocation();
+  const txtmsg = location.state;
+  console.log(txtmsg);
   const { register, handleSubmit, formState: { errors} } = useForm({mode: 'onChange'})
   const [messenger, setMessenger] = useState("");
   const navigate  = useNavigate();
@@ -39,29 +42,31 @@ function Login() {
                   <div className="mb-3 mt-md-4">
                     <h2 className="fw-bold mb-2 text-uppercase text-center">ログイン</h2>
                     <div className="mb-3">
-                    {errors.username && <div className='alert alert-warning'> {errors.username.message}</div>}
-                      <Form onSubmit={handleSubmit(onSubmit)}>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form onSubmit={handleSubmit(onSubmit)}>
+                        <Form.Group controlId="username">
                           <Form.Label className="text-center">
                             ユーザー名
                           </Form.Label>
+                        <div className='text-success fw-light mb-3 mt-1'>{txtmsg && txtmsg}</div>
+
                           <Form.Control type="text" placeholder="ユーザー名を入力してください。" 
                           {...register("username",{
                             required: "ユーザー名を入力してください。",
                             pattern: {
                                 value: /^[a-zA-Z0-9]+$/,
                                 message: "アルファベットと番号のみです。"
-                            },validate: value => {
+                              },validate: value => {
                                 if (value.indexOf(' ') !== -1) {
                                   return '値にスペースを含めることはできません。';
                                 }
                               }
-                        })} 
+                            })} 
                           />
                         </Form.Group>
+                        <div className='text-danger fw-light mb-3 mt-1'>{errors.username && errors.username.message}　</div>
                         <Form.Group
                           className="mb-3"
-                          controlId="formBasicPassword"
+                          controlId="password"
                         >
                           <Form.Label>パスワード</Form.Label>
                           <Form.Control type="password" {...register("password")} placeholder="パスワードを入力してください。" />
